@@ -78,7 +78,7 @@ class Ground extends GeometricObject {
 
     draw(vertexAttr, colorAttr, modelUniform, coordFrame) {
         gl.uniform3fv(objTintUnif, vec3.fromValues(214/255,216/255,162/255));
-        gl.uniform1f(ambCoeffUnif, 0.35);
+        gl.uniform1f(ambCoeffUnif, 0.2);
         gl.uniform1f(diffCoeffUnif, 0.75);
         gl.uniform1f(specCoeffUnif, 0.0);
         gl.uniform1f(shininessUnif, 100);

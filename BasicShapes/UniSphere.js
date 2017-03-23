@@ -50,9 +50,8 @@ class UniSphere {
         let vertices = [];
         for (let k = 0; k < this.vex.length; k++) {
             vertices.push(this.vex[k][0], this.vex[k][1], this.vex[k][2]);
-            vec3.lerp(randColor, col1, col2, Math.random());
-            /* linear interpolation between two colors */
-            vertices.push(randColor[0], randColor[1], randColor[2]);
+            /* the next three floats are vertex normal */
+            vertices.push (this.vex[k][0], this.vex[k][1], this.vex[k][2]);
         }
         this.vbuff = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, this.vbuff);
@@ -104,7 +103,7 @@ class UniSphere {
      */
     draw(vertexAttr, colorAttr, modelUniform, coordFrame) {
         gl.uniform3fv(objTintUnif, vec3.fromValues(this.color[0], this.color[1], this.color[2]));
-        gl.uniform1f(ambCoeffUnif, 0.35);
+        gl.uniform1f(ambCoeffUnif, 0.2);
         gl.uniform1f(diffCoeffUnif, 0.75);
         gl.uniform1f(specCoeffUnif, 0.6);
         gl.uniform1f(shininessUnif, 20);

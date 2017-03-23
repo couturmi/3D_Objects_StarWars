@@ -14,10 +14,10 @@ var globalX, globalY, globalZ;
 var posAttr, colAttr, normalAttr;
 
 /* Shader uniform variables */
-var projUnif, viewUnif, modelUnif, lightPosUnif;
+var projUnif, viewUnif, modelUnif, lightPosUnif1, lightPosUnif2;
 var objAmbientUnif, normalUnif, isEnabledUnif;
 var objTintUnif, ambCoeffUnif, diffCoeffUnif, specCoeffUnif, shininessUnif;
-var lightPos, useLightingUnif;
+var lightPos1, lightPos2, useLightingUnif;
 var lineBuff, normBuff, objTint, pointLight;
 var shaderProg, redrawNeeded, showLight1, showLight2;
 var lightingComponentEnabled = [true, true, true];
@@ -78,7 +78,8 @@ function main() {
             posAttr = gl.getAttribLocation(prog, "vertexPos");
             colAttr = gl.getAttribLocation(prog, "vertexCol");
             normalAttr = gl.getAttribLocation(prog, "vertexNormal");
-            lightPosUnif = gl.getUniformLocation(prog, "lightPosWorld");
+            lightPosUnif1 = gl.getUniformLocation(prog, "lightPosWorld1");
+            lightPosUnif2 = gl.getUniformLocation(prog, "lightPosWorld2");
             projUnif = gl.getUniformLocation(prog, "projection");
             viewUnif = gl.getUniformLocation(prog, "view");
             modelUnif = gl.getUniformLocation(prog, "modelCF");
@@ -101,6 +102,10 @@ function main() {
             bbCF = mat4.create();
             tmpMat = mat4.create();
             bbTranslation = mat4.create();
+            this.bb8BodyCF = mat4.create();
+            this.bb8HeadCF = mat4.create();
+            this.bb6BodyCF = mat4.create();
+            this.bb6HeadCF = mat4.create();
             hut1Transformation = mat4.create();
             hut2Transformation = mat4.create();
             hut3Transformation = mat4.create();
@@ -116,19 +121,22 @@ function main() {
             rotateZ = false;
             updateObject();
 
-            /* light Position */
-            lightPos = vec3.fromValues(3, -3, 4);
-            mat4.fromTranslation(lightCF, lightPos);
-            lightx.value = lightPos[0];
-            lighty.value = lightPos[1];
-            lightz.value = lightPos[2];
-            gl.uniform3fv (lightPosUnif, lightPos);
-            let vertices = [0, 0, 0, 1, 1, 1,
-                lightPos[0], 0, 0, 1, 1, 1,
-                lightPos[0], lightPos[1], 0, 1, 1, 1,
-                lightPos[0], lightPos[1], lightPos[2], 1, 1, 1];
-            gl.bindBuffer(gl.ARRAY_BUFFER, lineBuff);
-            gl.bufferData(gl.ARRAY_BUFFER, Float32Array.from(vertices), gl.STATIC_DRAW);
+            /* light Position3, -3, 4 */
+            lightPos1 = vec3.fromValues(-3, -3, 4);
+            // mat4.fromTranslation(lightCF, lightPos1);
+            // lightx.value = lightPos1[0];
+            // lighty.value = lightPos1[1];
+            // lightz.value = lightPos1[2];
+            gl.uniform3fv (lightPosUnif1, lightPos1);
+            // let vertices = [0, 0, 0, 1, 1, 1,
+            //     lightPos1[0], 0, 0, 1, 1, 1,
+            //     lightPos1[0], lightPos1[1], 0, 1, 1, 1,
+            //     lightPos1[0], lightPos1[1], lightPos1[2], 1, 1, 1];
+            // gl.bindBuffer(gl.ARRAY_BUFFER, lineBuff);
+            // gl.bufferData(gl.ARRAY_BUFFER, Float32Array.from(vertices), gl.STATIC_DRAW);
+
+            lightPos2 = vec3.fromValues(4, 4, 1);
+            gl.uniform3fv (lightPosUnif2, lightPos2);
 
             BBScaleTransformation = mat4.create();
             let bbScale = vec3.fromValues(0.5,0.5,0.5);
@@ -272,25 +280,11 @@ function drawScene() {
     gl.enableVertexAttribArray(colAttr);
 
     // ground.drawNormal(posAttr, colAttr, modelUnif, IDENTITY);
-    // ground.drawVectorsTo(gl, lightPos, posAttr, colAttr, modelUnif, IDENTITY);
+    // ground.drawVectorsTo(gl, lightPos1, posAttr, colAttr, modelUnif, IDENTITY);
 
     sky.draw(posAttr, colAttr, modelUnif, IDENTITY);
     // globalAxes.draw(posAttr, colAttr, modelUnif, IDENTITY);
 
-    if (typeof obj !== 'undefined') {
-        checkIfMoveBB(1);
-        gl.uniform1i (useLightingUnif, true);
-        gl.disableVertexAttribArray(colAttr);
-        gl.enableVertexAttribArray(normalAttr);
-        obj.draw(posAttr, normalAttr, modelUnif, IDENTITY);
-    }
-    if (typeof obj2 !== 'undefined') {
-        checkIfMoveBB(2);
-        gl.uniform1i (useLightingUnif, true);
-        gl.disableVertexAttribArray(colAttr);
-        gl.enableVertexAttribArray(normalAttr);
-        obj2.draw(posAttr, normalAttr, modelUnif, IDENTITY);
-    }
     if (typeof hut1 !== 'undefined') {
         checkIfRotateHut(1);
         gl.uniform1i (useLightingUnif, true);
@@ -324,6 +318,20 @@ function drawScene() {
     gl.enableVertexAttribArray(normalAttr);
     for(let i = 0; i < rockArray.length; i++){
         rockArray[i].draw(posAttr, normalAttr, modelUnif, rockTransformationsArray[i]);
+    }
+    if (typeof obj !== 'undefined') {
+        checkIfMoveBB(1);
+        gl.uniform1i (useLightingUnif, true);
+        gl.disableVertexAttribArray(colAttr);
+        gl.enableVertexAttribArray(normalAttr);
+        obj.draw(posAttr, normalAttr, modelUnif, IDENTITY, viewMat);
+    }
+    if (typeof obj2 !== 'undefined') {
+        checkIfMoveBB(2);
+        gl.uniform1i (useLightingUnif, true);
+        gl.disableVertexAttribArray(colAttr);
+        gl.enableVertexAttribArray(normalAttr);
+        obj2.draw(posAttr, normalAttr, modelUnif, IDENTITY, viewMat);
     }
 
 }
@@ -523,28 +531,30 @@ function checkIfRotateHut(num) {
 function lightPosChanged(ev) {
     switch (ev.target.id) {
         case 'lightx':
-            lightPos[0] = ev.target.value;
+            lightPos1[0] = ev.target.value;
             break;
         case 'lighty':
-            lightPos[1] = ev.target.value;
+            lightPos1[1] = ev.target.value;
             break;
         case 'lightz':
-            lightPos[2] = ev.target.value;
+            lightPos1[2] = ev.target.value;
             break;
     }
-    mat4.fromTranslation(lightCF, lightPos);
-    gl.uniform3fv (lightPosUnif, lightPos);
+    mat4.fromTranslation(lightCF, lightPos1);
+    gl.uniform3fv (lightPosUnif1, lightPos1);
+    gl.uniform3fv (lightPosUnif2, lightPos2);
     // let vertices = [
     //     0, 0, 0, 1, 1, 1,
-    //     lightPos[0], 0, 0, 1, 1, 1,
-    //     lightPos[0], lightPos[1], 0, 1, 1, 1,
-    //     lightPos[0], lightPos[1], lightPos[2], 1, 1, 1];
+    //     lightPos1[0], 0, 0, 1, 1, 1,
+    //     lightPos1[0], lightPos1[1], 0, 1, 1, 1,
+    //     lightPos1[0], lightPos1[1], lightPos1[2], 1, 1, 1];
     // gl.bindBuffer(gl.ARRAY_BUFFER, lineBuff);
     // gl.bufferData(gl.ARRAY_BUFFER, Float32Array.from(vertices), gl.STATIC_DRAW);
     redrawNeeded = true;
 }
 
 function objectPosChanged() {
-    mat4.fromTranslation(lightCF, lightPos);
-    gl.uniform3fv (lightPosUnif, lightPos);
+    mat4.fromTranslation(lightCF, lightPos1);
+    gl.uniform3fv (lightPosUnif1, lightPos1);
+    gl.uniform3fv (lightPosUnif2, lightPos1);
 }

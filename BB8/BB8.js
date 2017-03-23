@@ -5,6 +5,8 @@
 class BB8 {
 
     constructor(gl, prog, radius, color) {
+        normalUnif = gl.getUniformLocation(prog, "normalMat");
+
         this.radius = radius;
 
         this.movingLeft = false;
@@ -32,10 +34,13 @@ class BB8 {
         this.spinCountMax = 200; //represents the range the head will spin
         this.spinCount = this.spinCountMax/2; //represent the current position within the range spinCountMax
         this.rotationDirection = -Math.PI / 270;
+
+        this.normalMat = mat3.create();
     }
 
-    draw (vertexAttr, colorAttr, modelUniform, coordFrame) {
+    draw (vertexAttr, colorAttr, modelUniform, coordFrame, viewMat) {
         //spin body (constant)
+        mat4.mul(this.bodyCoorFrame, this.bodyCoorFrame, coordFrame);
         if(this.movingDown) {
             this.a = vec3.fromValues(10,0,0);
             if(this.direction != "down") {
@@ -73,6 +78,10 @@ class BB8 {
             mat4.rotate(this.bodyCoorFrame,this.bodyCoorFrame, -Math.PI/45, a);
             this.direction = "right";
         }
+        let tmpMat = mat4.create();
+        mat4.mul (tmpMat, viewMat, this.bodyCoorFrame);
+        mat3.normalFromMat4 (this.normalMat, tmpMat);
+        gl.uniformMatrix3fv (normalUnif, false, this.normalMat);
         this.body.draw(vertexAttr, colorAttr, modelUniform, this.bodyCoorFrame);
 
         //spin head (not constant)
@@ -88,6 +97,10 @@ class BB8 {
         if(this.spinCount < this.spinCountMax*(3/4) && this.spinCount > this.spinCountMax*(1/4))
             mat4.rotateZ(this.headCoorFrame, this.headCoorFrame, this.rotationDirection);
         this.spinCount++;
+        tmpMat = mat4.create();
+        mat4.mul (tmpMat, viewMat, this.headCoorFrame);
+        mat3.normalFromMat4 (this.normalMat, tmpMat);
+        gl.uniformMatrix3fv (normalUnif, false, this.normalMat);
         this.head.draw(vertexAttr, colorAttr, modelUniform, this.headCoorFrame);
     }
 

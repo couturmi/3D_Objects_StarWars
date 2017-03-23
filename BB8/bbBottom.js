@@ -11,7 +11,9 @@ class bbBottom {
 
         //define objects
         this.body = new UniSphere(gl, prog, this.radius, 6, bodyColor, bodyColor);
-        this.rings = new BodyRings(gl, prog, this.radius+0.005, uniqueColor);
+        this.rings1 = new BodyRings(gl, prog, this.radius+0.005, uniqueColor);
+        this.rings2 = new BodyRings(gl, prog, this.radius+0.005, uniqueColor);
+        this.rings3 = new BodyRings(gl, prog, this.radius+0.005, uniqueColor);
 
         //define tranformations
         // this.bodyTransform = mat4.create();
@@ -43,13 +45,13 @@ class bbBottom {
         this.body.draw(vertexAttr, colorAttr, modelUniform, coordFrame);
 
         mat4.mul (this.tmp, coordFrame, this.ringsTransform1);
-        this.rings.draw(vertexAttr, colorAttr, modelUniform, this.tmp);
+        this.rings1.draw(vertexAttr, colorAttr, modelUniform, this.tmp);
 
         mat4.mul (this.tmp, coordFrame, this.ringsTransform2);
-        this.rings.draw(vertexAttr, colorAttr, modelUniform, this.tmp);
+        this.rings2.draw(vertexAttr, colorAttr, modelUniform, this.tmp);
 
         mat4.mul (this.tmp, coordFrame, this.ringsTransform3);
-        this.rings.draw(vertexAttr, colorAttr, modelUniform, this.tmp);
+        this.rings3.draw(vertexAttr, colorAttr, modelUniform, this.tmp);
     }
 
     getRadius() {

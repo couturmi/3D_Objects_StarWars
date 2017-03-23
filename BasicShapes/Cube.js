@@ -112,7 +112,7 @@ class Cube {
    */
   draw(vertexAttr, colorAttr, modelUniform, coordFrame) {
     gl.uniform3fv(objTintUnif, vec3.fromValues(this.colorShader[0], this.colorShader[1], this.colorShader[2]));
-    gl.uniform1f(ambCoeffUnif, 0.35);
+    gl.uniform1f(ambCoeffUnif, 0.2);
     gl.uniform1f(diffCoeffUnif, 0.75);
     gl.uniform1f(specCoeffUnif, 0.6);
     gl.uniform1f(shininessUnif, 20);

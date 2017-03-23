@@ -122,7 +122,7 @@ class Ring {
      */
     draw(vertexAttr, colorAttr, modelUniform, coordFrame) {
         gl.uniform3fv(objTintUnif, vec3.fromValues(this.color[0], this.color[1], this.color[2]));
-        gl.uniform1f(ambCoeffUnif, 0.35);
+        gl.uniform1f(ambCoeffUnif, 0.2);
         gl.uniform1f(diffCoeffUnif, 0.75);
         gl.uniform1f(specCoeffUnif, 0.7);
         gl.uniform1f(shininessUnif, 25);

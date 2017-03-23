@@ -22,7 +22,7 @@ class BodyRings {
         let n2 = vec3.create();
         let norm = vec3.create();
         vertices.push(0,0,radius); /* tip of sphere */
-        vertices.push(color[0], color[1], color[2]);
+        vertices.push(0, 0, 0);
         for(let i = 1; i <= 2; i++){
             seg_height = radius * Math.sin(seg_angle*(((subDiv / 4)-1) - i));
             seg_radius = radius * Math.cos(seg_angle*(((subDiv / 4)-1) - i));
@@ -100,7 +100,7 @@ class BodyRings {
 
     draw (vertexAttr, colorAttr, modelUniform, coordFrame) {
         gl.uniform3fv(objTintUnif, vec3.fromValues(this.color[0], this.color[1], this.color[2]));
-        gl.uniform1f(ambCoeffUnif, 0.35);
+        gl.uniform1f(ambCoeffUnif, 0.2);
         gl.uniform1f(diffCoeffUnif, 0.75);
         gl.uniform1f(specCoeffUnif, 0.35);
         gl.uniform1f(shininessUnif, 100);
