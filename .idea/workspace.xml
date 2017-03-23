@@ -18,11 +18,23 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="739">
+              <caret line="57" column="6" lean-forward="false" selection-start-line="57" selection-start-column="6" selection-end-line="57" selection-end-column="6" />
+              <folding>
+                <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="render.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/render.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="85" column="66" lean-forward="true" selection-start-line="85" selection-start-column="12" selection-end-line="85" selection-end-column="66" />
+            <state relative-caret-position="789">
+              <caret line="503" column="1" lean-forward="false" selection-start-line="503" selection-start-column="1" selection-end-line="503" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -48,11 +60,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BodyRings.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BodyRings.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BB8/BodyRings.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="43" column="55" lean-forward="false" selection-start-line="43" selection-start-column="55" selection-end-line="43" selection-end-column="55" />
+            <state relative-caret-position="449">
+              <caret line="47" column="41" lean-forward="true" selection-start-line="47" selection-start-column="41" selection-end-line="47" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -92,7 +104,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>isEnabled</find>
       <find>useLighting</find>
       <find>vertexCol</find>
       <find>vertexNormal</find>
@@ -122,6 +133,7 @@
       <find>tmpMat</find>
       <find>normalMat</find>
       <find>normalUnif</find>
+      <find>lightPosChanged</find>
     </findStrings>
     <replaceStrings>
       <replace>hutPosition</replace>
@@ -162,7 +174,6 @@
         <option value="$PROJECT_DIR$/BasicShapes/GeometricObject.js" />
         <option value="$PROJECT_DIR$/BB8/bbHead.js" />
         <option value="$PROJECT_DIR$/vshader.glsl" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/Ground.js" />
         <option value="$PROJECT_DIR$/BasicShapes/UniSphere.js" />
         <option value="$PROJECT_DIR$/BasicShapes/RingHalf.js" />
@@ -170,10 +181,11 @@
         <option value="$PROJECT_DIR$/BasicShapes/Hemisphere.js" />
         <option value="$PROJECT_DIR$/BasicShapes/Cylinder.js" />
         <option value="$PROJECT_DIR$/BasicShapes/Cube.js" />
-        <option value="$PROJECT_DIR$/render.js" />
         <option value="$PROJECT_DIR$/BB8/BB8.js" />
         <option value="$PROJECT_DIR$/BB8/bbBottom.js" />
         <option value="$PROJECT_DIR$/BB8/BodyRings.js" />
+        <option value="$PROJECT_DIR$/render.js" />
+        <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
@@ -391,12 +403,12 @@
       <workItem from="1490214598441" duration="13066000" />
       <workItem from="1490246139779" duration="14502000" />
       <workItem from="1490262440713" duration="629000" />
-      <workItem from="1490263576128" duration="12612000" />
+      <workItem from="1490263576128" duration="13134000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="127877000" />
+    <option name="totallyTimeSpent" value="128399000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -702,16 +714,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="54" column="52" lean-forward="false" selection-start-line="54" selection-start-column="44" selection-end-line="54" selection-end-column="52" />
-          <folding>
-            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Ground.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
@@ -760,14 +762,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/render.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="85" column="66" lean-forward="true" selection-start-line="85" selection-start-column="12" selection-end-line="85" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BB8/BB8.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="610">
@@ -802,9 +796,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/BB8/BodyRings.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="43" column="55" lean-forward="false" selection-start-line="43" selection-start-column="55" selection-end-line="43" selection-end-column="55" />
+        <state relative-caret-position="449">
+          <caret line="47" column="41" lean-forward="true" selection-start-line="47" selection-start-column="41" selection-end-line="47" selection-end-column="41" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/render.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="789">
+          <caret line="503" column="1" lean-forward="false" selection-start-line="503" selection-start-column="1" selection-end-line="503" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="739">
+          <caret line="57" column="6" lean-forward="false" selection-start-line="57" selection-start-column="6" selection-end-line="57" selection-end-column="6" />
+          <folding>
+            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

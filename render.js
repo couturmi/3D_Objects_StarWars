@@ -51,13 +51,6 @@ function main() {
         redrawNeeded = true;
     }, false);
 
-    let lightxslider = document.getElementById("lightx");
-    let lightyslider = document.getElementById("lighty");
-    let lightzslider = document.getElementById("lightz");
-    lightxslider.addEventListener('input', lightPosChanged, false);
-    lightyslider.addEventListener('input', lightPosChanged, false);
-    lightzslider.addEventListener('input', lightPosChanged, false);
-
     /*objects*/
     gl = WebGLUtils.setupWebGL(glCanvas, null);
     axisBuff = gl.createBuffer();
@@ -121,19 +114,9 @@ function main() {
             rotateZ = false;
             updateObject();
 
-            /* light Position3, -3, 4 */
+            /* light Position */
             lightPos1 = vec3.fromValues(-3, -3, 4);
-            // mat4.fromTranslation(lightCF, lightPos1);
-            // lightx.value = lightPos1[0];
-            // lighty.value = lightPos1[1];
-            // lightz.value = lightPos1[2];
             gl.uniform3fv (lightPosUnif1, lightPos1);
-            // let vertices = [0, 0, 0, 1, 1, 1,
-            //     lightPos1[0], 0, 0, 1, 1, 1,
-            //     lightPos1[0], lightPos1[1], 0, 1, 1, 1,
-            //     lightPos1[0], lightPos1[1], lightPos1[2], 1, 1, 1];
-            // gl.bindBuffer(gl.ARRAY_BUFFER, lineBuff);
-            // gl.bufferData(gl.ARRAY_BUFFER, Float32Array.from(vertices), gl.STATIC_DRAW);
 
             lightPos2 = vec3.fromValues(4, 4, 1);
             gl.uniform3fv (lightPosUnif2, lightPos2);
@@ -261,14 +244,6 @@ function drawScene() {
     gl.uniform1i (useLightingUnif, false);
     gl.disableVertexAttribArray(normalAttr);
     gl.enableVertexAttribArray(colAttr);
-
-    /* Use LINE_STRIP to mark light position */
-    // gl.uniformMatrix4fv(modelUnif, false, IDENTITY);
-    // gl.bindBuffer(gl.ARRAY_BUFFER, lineBuff);
-    // gl.vertexAttribPointer(posAttr, 3, gl.FLOAT, false, 24, 0);
-    // gl.vertexAttribPointer(colAttr, 3, gl.FLOAT, false, 24, 12);
-    // gl.drawArrays(gl.LINE_STRIP, 0, 4);
-    // pointLight.draw(posAttr, colAttr, modelUnif, lightCF);
 
     gl.uniform1i (useLightingUnif, true);
     gl.disableVertexAttribArray(colAttr);
@@ -526,35 +501,4 @@ function checkIfRotateHut(num) {
                 mat4.rotateY(hut4Transformation, hut4Transformation, Math.PI / 90);
         }
     }
-}
-
-function lightPosChanged(ev) {
-    switch (ev.target.id) {
-        case 'lightx':
-            lightPos1[0] = ev.target.value;
-            break;
-        case 'lighty':
-            lightPos1[1] = ev.target.value;
-            break;
-        case 'lightz':
-            lightPos1[2] = ev.target.value;
-            break;
-    }
-    mat4.fromTranslation(lightCF, lightPos1);
-    gl.uniform3fv (lightPosUnif1, lightPos1);
-    gl.uniform3fv (lightPosUnif2, lightPos2);
-    // let vertices = [
-    //     0, 0, 0, 1, 1, 1,
-    //     lightPos1[0], 0, 0, 1, 1, 1,
-    //     lightPos1[0], lightPos1[1], 0, 1, 1, 1,
-    //     lightPos1[0], lightPos1[1], lightPos1[2], 1, 1, 1];
-    // gl.bindBuffer(gl.ARRAY_BUFFER, lineBuff);
-    // gl.bufferData(gl.ARRAY_BUFFER, Float32Array.from(vertices), gl.STATIC_DRAW);
-    redrawNeeded = true;
-}
-
-function objectPosChanged() {
-    mat4.fromTranslation(lightCF, lightPos1);
-    gl.uniform3fv (lightPosUnif1, lightPos1);
-    gl.uniform3fv (lightPosUnif2, lightPos1);
 }
