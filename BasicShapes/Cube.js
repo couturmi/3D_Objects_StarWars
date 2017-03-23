@@ -26,6 +26,9 @@ class Cube {
     vec3.lerp(randColor, col1, col2, Math.random());
     this.colorShader = randColor;
 
+    let n1 = vec3.create();
+    let n2 = vec3.create();
+    let norm = vec3.create();
     this.vex = [
       vec3.fromValues(-size / 2, -size / 2, +size / 2),  // 0
       vec3.fromValues(+size / 2, -size / 2, +size / 2),  // 1
@@ -50,9 +53,8 @@ class Cube {
     for (let k = 0; k < this.vex.length; k++)
     {
       vertices.push(this.vex[k][0], this.vex[k][1], this.vex[k][2]);
-      vertices.push(this.color[k][0], this.color[k][1], this.color[k][2]);
-      // vec3.lerp (randColor, col1, col2, Math.random()); /* linear interpolation between two colors */
-      // vertices.push(randColor[0], randColor[1], randColor[2]);
+      /* the next three floats are vertex normal */
+        vertices.push (this.vex[k][0], this.vex[k][1], 0);
     }
     this.vbuff = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.vbuff);

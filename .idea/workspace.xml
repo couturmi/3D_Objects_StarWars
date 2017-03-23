@@ -18,93 +18,71 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="71" column="10" lean-forward="false" selection-start-line="71" selection-start-column="10" selection-end-line="71" selection-end-column="10" />
-              <folding>
-                <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="render.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="render.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/render.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="556">
-              <caret line="236" column="27" lean-forward="false" selection-start-line="236" selection-start-column="27" selection-end-line="236" selection-end-column="27" />
+            <state relative-caret-position="271">
+              <caret line="262" column="12" lean-forward="false" selection-start-line="257" selection-start-column="7" selection-end-line="262" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Hut.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Hut/Hut.js">
+      <file leaf-file-name="BodyRings.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BB8/BodyRings.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="65" lean-forward="false" selection-start-line="8" selection-start-column="65" selection-end-line="8" selection-end-column="65" />
+            <state relative-caret-position="449">
+              <caret line="104" column="40" lean-forward="false" selection-start-line="104" selection-start-column="40" selection-end-line="104" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Cube.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BasicShapes/Cube.js">
+      <file leaf-file-name="Torus.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BasicShapes/Torus.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
-              <caret line="115" column="15" lean-forward="false" selection-start-line="111" selection-start-column="5" selection-end-line="115" selection-end-column="15" />
+            <state relative-caret-position="423">
+              <caret line="41" column="63" lean-forward="true" selection-start-line="32" selection-start-column="14" selection-end-line="41" selection-end-column="63" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bbHead.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BB8/bbHead.js">
+      <file leaf-file-name="vshader.glsl" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vshader.glsl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="71" column="87" lean-forward="false" selection-start-line="71" selection-start-column="87" selection-end-line="71" selection-end-column="87" />
+            <state relative-caret-position="272">
+              <caret line="16" column="54" lean-forward="false" selection-start-line="16" selection-start-column="54" selection-end-line="16" selection-end-column="54" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Axes.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BasicShapes/Axes.js">
+      <file leaf-file-name="Ground.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Ground.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+            <state relative-caret-position="561">
+              <caret line="33" column="43" lean-forward="false" selection-start-line="33" selection-start-column="43" selection-end-line="33" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RockType1.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Rocks/RockType1.js">
+      <file leaf-file-name="RingHalf.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BasicShapes/RingHalf.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="24" lean-forward="false" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
+            <state relative-caret-position="585">
+              <caret line="44" column="42" lean-forward="true" selection-start-line="43" selection-start-column="16" selection-end-line="44" selection-end-column="42" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Hemisphere.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BasicShapes/Hemisphere.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="65" lean-forward="true" selection-start-line="5" selection-start-column="8" selection-end-line="10" selection-end-column="65" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UniSphere.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UniSphere.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/BasicShapes/UniSphere.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="109" column="40" lean-forward="true" selection-start-line="105" selection-start-column="8" selection-end-line="109" selection-end-column="40" />
+            <state relative-caret-position="510">
+              <caret line="45" column="37" lean-forward="true" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -124,7 +102,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>pointer</find>
       <find>resizeWindow</find>
       <find>lightCF</find>
       <find>eyePos</find>
@@ -154,6 +131,7 @@
       <find>lightPos</find>
       <find>uni</find>
       <find>axes</find>
+      <find>normalCount</find>
     </findStrings>
     <replaceStrings>
       <replace>hutPosition</replace>
@@ -187,23 +165,23 @@
         <option value="$PROJECT_DIR$/GeometricObject.js" />
         <option value="$PROJECT_DIR$/BasicShapes/Torus.js" />
         <option value="$PROJECT_DIR$/Sky.js" />
-        <option value="$PROJECT_DIR$/BasicShapes/GeometricObject.js" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/vshader.glsl" />
-        <option value="$PROJECT_DIR$/Ground.js" />
-        <option value="$PROJECT_DIR$/BB8/BodyRings.js" />
         <option value="$PROJECT_DIR$/BB8/bbBottom.js" />
-        <option value="$PROJECT_DIR$/BasicShapes/UniSphere.js" />
         <option value="$PROJECT_DIR$/BB8/BB8.js" />
-        <option value="$PROJECT_DIR$/BasicShapes/Hemisphere.js" />
-        <option value="$PROJECT_DIR$/BasicShapes/Ring.js" />
         <option value="$PROJECT_DIR$/BasicShapes/Axes.js" />
-        <option value="$PROJECT_DIR$/BasicShapes/Cylinder.js" />
-        <option value="$PROJECT_DIR$/BB8/bbHead.js" />
-        <option value="$PROJECT_DIR$/BasicShapes/RingHalf.js" />
-        <option value="$PROJECT_DIR$/BasicShapes/Cube.js" />
         <option value="$PROJECT_DIR$/Hut/Hut.js" />
         <option value="$PROJECT_DIR$/Rocks/RockType1.js" />
+        <option value="$PROJECT_DIR$/BasicShapes/GeometricObject.js" />
+        <option value="$PROJECT_DIR$/BasicShapes/UniSphere.js" />
+        <option value="$PROJECT_DIR$/BB8/BodyRings.js" />
+        <option value="$PROJECT_DIR$/BB8/bbHead.js" />
+        <option value="$PROJECT_DIR$/vshader.glsl" />
+        <option value="$PROJECT_DIR$/BasicShapes/Hemisphere.js" />
+        <option value="$PROJECT_DIR$/BasicShapes/Cylinder.js" />
+        <option value="$PROJECT_DIR$/BasicShapes/RingHalf.js" />
+        <option value="$PROJECT_DIR$/BasicShapes/Cube.js" />
+        <option value="$PROJECT_DIR$/Ground.js" />
+        <option value="$PROJECT_DIR$/BasicShapes/Ring.js" />
         <option value="$PROJECT_DIR$/render.js" />
       </list>
     </option>
@@ -235,8 +213,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -321,6 +297,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -420,12 +398,14 @@
       <workItem from="1489390407334" duration="14851000" />
       <workItem from="1490214332559" duration="196000" />
       <workItem from="1490214598441" duration="13066000" />
-      <workItem from="1490246139779" duration="12758000" />
+      <workItem from="1490246139779" duration="14502000" />
+      <workItem from="1490262440713" duration="629000" />
+      <workItem from="1490263576128" duration="6145000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="112892000" />
+    <option name="totallyTimeSpent" value="121410000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -665,7 +645,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="30" lean-forward="true" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -698,56 +677,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BB8/BodyRings.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="87" column="40" lean-forward="true" selection-start-line="83" selection-start-column="8" selection-end-line="87" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Ground.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="466">
-          <caret line="56" column="40" lean-forward="true" selection-start-line="52" selection-start-column="8" selection-end-line="56" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vshader.glsl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
-          <caret line="54" column="11" lean-forward="true" selection-start-line="54" selection-start-column="11" selection-end-line="54" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BasicShapes/Torus.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-102">
-          <caret line="3" column="35" lean-forward="true" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BasicShapes/GeometricObject.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-605">
-          <caret line="3" column="21" lean-forward="false" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
-          <folding>
-            <element signature="e#3852#3897#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BasicShapes/Ring.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="568">
-          <caret line="132" column="0" lean-forward="false" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BasicShapes/Axes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -756,65 +685,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BB8/bbHead.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="71" column="87" lean-forward="false" selection-start-line="71" selection-start-column="87" selection-end-line="71" selection-end-column="87" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BasicShapes/Cylinder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="99" column="4" lean-forward="false" selection-start-line="99" selection-start-column="4" selection-end-line="99" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BasicShapes/RingHalf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="113" column="40" lean-forward="false" selection-start-line="113" selection-start-column="40" selection-end-line="117" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BasicShapes/Hemisphere.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="65" lean-forward="true" selection-start-line="5" selection-start-column="8" selection-end-line="10" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BasicShapes/UniSphere.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="109" column="40" lean-forward="true" selection-start-line="105" selection-start-column="8" selection-end-line="109" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BasicShapes/Cube.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="115" column="15" lean-forward="false" selection-start-line="111" selection-start-column="5" selection-end-line="115" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Hut/Hut.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="65" lean-forward="false" selection-start-line="8" selection-start-column="65" selection-end-line="8" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
+        <state relative-caret-position="1207">
           <caret line="71" column="10" lean-forward="false" selection-start-line="71" selection-start-column="10" selection-end-line="71" selection-end-column="10" />
           <folding>
             <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -830,10 +703,116 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Hut/Hut.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="65" lean-forward="false" selection-start-line="8" selection-start-column="65" selection-end-line="8" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BasicShapes/GeometricObject.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="35" column="35" lean-forward="false" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="35" />
+          <folding>
+            <element signature="e#3852#3897#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BasicShapes/Torus.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="41" column="63" lean-forward="true" selection-start-line="32" selection-start-column="14" selection-end-line="41" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BB8/BodyRings.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="449">
+          <caret line="104" column="40" lean-forward="false" selection-start-line="104" selection-start-column="40" selection-end-line="104" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BB8/bbHead.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="74" column="86" lean-forward="false" selection-start-line="74" selection-start-column="86" selection-end-line="74" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vshader.glsl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="54" lean-forward="false" selection-start-line="16" selection-start-column="54" selection-end-line="16" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BasicShapes/Hemisphere.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="52" column="58" lean-forward="true" selection-start-line="43" selection-start-column="16" selection-end-line="52" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BasicShapes/Cylinder.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="36" column="32" lean-forward="true" selection-start-line="35" selection-start-column="6" selection-end-line="36" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BasicShapes/Cube.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="56" column="52" lean-forward="false" selection-start-line="56" selection-start-column="52" selection-end-line="56" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Ground.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="43" lean-forward="false" selection-start-line="33" selection-start-column="43" selection-end-line="33" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BasicShapes/Ring.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="449">
+          <caret line="127" column="38" lean-forward="false" selection-start-line="127" selection-start-column="38" selection-end-line="127" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BasicShapes/RingHalf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="44" column="42" lean-forward="true" selection-start-line="43" selection-start-column="16" selection-end-line="44" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/render.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="556">
-          <caret line="236" column="27" lean-forward="false" selection-start-line="236" selection-start-column="27" selection-end-line="236" selection-end-column="27" />
+        <state relative-caret-position="271">
+          <caret line="262" column="12" lean-forward="false" selection-start-line="257" selection-start-column="7" selection-end-line="262" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BasicShapes/UniSphere.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="45" column="37" lean-forward="true" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
           <folding />
         </state>
       </provider>

@@ -72,7 +72,7 @@ class bbHead {
         this.headMidSection.draw(vertexAttr, colorAttr, modelUniform, this.tmp, 0.7, 15);
 
         mat4.mul (this.tmp, coordFrame, this.headTopTransform);
-        this.headTopSection.draw(vertexAttr, colorAttr, modelUniform, this.tmp);
+        this.headTopSection.draw(vertexAttr, colorAttr, modelUniform, this.tmp, 0.6, 10);
 
         mat4.mul (this.tmp, coordFrame, this.eyeRing1Transform);
         this.eyeRing1.draw(vertexAttr, colorAttr, modelUniform, this.tmp);

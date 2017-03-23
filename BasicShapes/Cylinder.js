@@ -22,6 +22,9 @@ class Cylinder {
     this.heightVar = height;
 
     /* create the top points */
+    let n1 = vec3.create();
+    let n2 = vec3.create();
+    let norm = vec3.create();
     vertices.push(0,0,height/2);
     vec3.lerp (randColor, col1, col2, Math.random()); /* linear interpolation between two colors */
     vertices.push(randColor[0], randColor[1], randColor[2]);
@@ -30,8 +33,8 @@ class Cylinder {
       let x = topRadius * Math.cos (angle);
       let y = topRadius * Math.sin (angle);
       vertices.push (x, y, height/2); /* perimeter */
-      vec3.lerp (randColor, col1, col2, Math.random()); /* linear interpolation between two colors */
-      vertices.push(randColor[0], randColor[1], randColor[2]);
+      /* the next three floats are vertex normal */
+        vertices.push (x, y, 0);
     }
     /* create the bottom points */
     vertices.push(0,0, -height/2);

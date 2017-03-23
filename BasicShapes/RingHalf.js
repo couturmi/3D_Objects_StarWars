@@ -19,6 +19,9 @@ class RingHalf {
         this.color = randColor;
         let vertices = [];
 
+        let n1 = vec3.create();
+        let n2 = vec3.create();
+        let norm = vec3.create();
         for (let s = 0; s <= verticalDiv; s++) {
             let h = height/2 - s * height / (verticalDiv);
             for (let k = 0; k <= radialDiv/2; k++) {
@@ -28,10 +31,8 @@ class RingHalf {
 
                 /* the first three floats are 3D (x,y,z) position */
                 vertices.push(x, y, h);
-                vec3.lerp(randColor, col1, col2, Math.random());
-                /* linear interpolation between two colors */
-                /* the next three floats are RGB */
-                vertices.push(randColor[0], randColor[1], randColor[2]);
+                /* the next three floats are vertex normal */
+                vertices.push (x, y, 0);
             }
             for (let k = 0; k <= radialDiv/2; k++) {
                 let angle = k * 2 * Math.PI / radialDiv;
@@ -40,10 +41,8 @@ class RingHalf {
 
                 /* the first three floats are 3D (x,y,z) position */
                 vertices.push(x, y, h);
-                vec3.lerp(randColor, col1, col2, Math.random());
-                /* linear interpolation between two colors */
-                /* the next three floats are RGB */
-                vertices.push(randColor[0], randColor[1], randColor[2]);
+                /* the next three floats are vertex normal */
+                vertices.push (-x, -y, 0);
             }
         }
 

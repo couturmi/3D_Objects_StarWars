@@ -50,48 +50,6 @@ function main() {
         gl.uniform3iv (isEnabledUnif, lightingComponentEnabled);
         redrawNeeded = true;
     }, false);
-    // let ambientCheckBox = document.getElementById("enableAmbient");
-    // ambientCheckBox.addEventListener('change', ev => {
-    //     lightingComponentEnabled[0] = ev.target.checked;
-    //     gl.uniform3iv (isEnabledUnif, lightingComponentEnabled);
-    //     redrawNeeded = true;
-    // }, false);
-    // let diffuseCheckBox = document.getElementById("enableDiffuse");
-    // diffuseCheckBox.addEventListener('change', ev => {
-    //     lightingComponentEnabled[1] = ev.target.checked;
-    //     gl.uniform3iv (isEnabledUnif, lightingComponentEnabled);
-    //     redrawNeeded = true;
-    // }, false);
-    // let specularCheckBox = document.getElementById("enableSpecular");
-    // specularCheckBox.addEventListener('change', ev => {
-    //     lightingComponentEnabled[2] = ev.target.checked;
-    //     gl.uniform3iv (isEnabledUnif, lightingComponentEnabled);
-    //     redrawNeeded = true;
-    // }, false);
-    // let ambCoeffSlider = document.getElementById("amb-coeff");
-    // ambCoeffSlider.addEventListener('input', ev => {
-    //     gl.uniform1f(ambCoeffUnif, ev.target.value);
-    //     redrawNeeded = true;
-    // }, false);
-    // ambCoeffSlider.value = Math.random() * 0.2;
-    // let diffCoeffSlider = document.getElementById("diff-coeff");
-    // diffCoeffSlider.addEventListener('input', ev => {
-    //     gl.uniform1f(diffCoeffUnif, ev.target.value);
-    //     redrawNeeded = true;
-    // }, false);
-    // diffCoeffSlider.value = 0.5 + 0.5 * Math.random();  // random in [0.5, 1.0]
-    // let specCoeffSlider = document.getElementById("spec-coeff");
-    // specCoeffSlider.addEventListener('input', ev => {
-    //     gl.uniform1f(specCoeffUnif, ev.target.value);
-    //     redrawNeeded = true;
-    // }, false);
-    // specCoeffSlider.value = Math.random();
-    // let shinySlider = document.getElementById("spec-shiny");
-    // shinySlider.addEventListener('input', ev => {
-    //     gl.uniform1f(shininessUnif, ev.target.value);
-    //     redrawNeeded = true;
-    // }, false);
-    // shinySlider.value = Math.floor(1 + Math.random() * shinySlider.max);
 
     let lightxslider = document.getElementById("lightx");
     let lightyslider = document.getElementById("lighty");
@@ -171,14 +129,6 @@ function main() {
                 lightPos[0], lightPos[1], lightPos[2], 1, 1, 1];
             gl.bindBuffer(gl.ARRAY_BUFFER, lineBuff);
             gl.bufferData(gl.ARRAY_BUFFER, Float32Array.from(vertices), gl.STATIC_DRAW);
-
-            // /* lighting coefficients */
-            // objTint = vec3.fromValues(214/255,216/255,162/255);
-            // gl.uniform3fv(objTintUnif, objTint);
-            // gl.uniform1f(ambCoeffUnif, ambCoeffSlider.value);
-            // gl.uniform1f(diffCoeffUnif, diffCoeffSlider.value);
-            // gl.uniform1f(specCoeffUnif, specCoeffSlider.value);
-            // gl.uniform1f(shininessUnif, shinySlider.value);
 
             BBScaleTransformation = mat4.create();
             let bbScale = vec3.fromValues(0.5,0.5,0.5);
@@ -305,20 +255,16 @@ function drawScene() {
     gl.enableVertexAttribArray(colAttr);
 
     /* Use LINE_STRIP to mark light position */
-    gl.uniformMatrix4fv(modelUnif, false, IDENTITY);
-    gl.bindBuffer(gl.ARRAY_BUFFER, lineBuff);
-    gl.vertexAttribPointer(posAttr, 3, gl.FLOAT, false, 24, 0);
-    gl.vertexAttribPointer(colAttr, 3, gl.FLOAT, false, 24, 12);
-    gl.drawArrays(gl.LINE_STRIP, 0, 4);
-
-    pointLight.draw(posAttr, colAttr, modelUnif, lightCF);
+    // gl.uniformMatrix4fv(modelUnif, false, IDENTITY);
+    // gl.bindBuffer(gl.ARRAY_BUFFER, lineBuff);
+    // gl.vertexAttribPointer(posAttr, 3, gl.FLOAT, false, 24, 0);
+    // gl.vertexAttribPointer(colAttr, 3, gl.FLOAT, false, 24, 12);
+    // gl.drawArrays(gl.LINE_STRIP, 0, 4);
+    // pointLight.draw(posAttr, colAttr, modelUnif, lightCF);
 
     gl.uniform1i (useLightingUnif, true);
     gl.disableVertexAttribArray(colAttr);
     gl.enableVertexAttribArray(normalAttr);
-    //
-    // this.torus.draw(posAttr, normalAttr, modelUnif, IDENTITY);
-    // updateCoefficients(ground.getObjectCoefficients());
     ground.draw(posAttr, normalAttr, modelUnif, IDENTITY);
 
     gl.uniform1i (useLightingUnif, false);
@@ -428,11 +374,6 @@ function keyboardSceneHandler(event) {
 }
 
 function keyboardDownHandler(event) {
-    // const transXpos = vec3.fromValues( 0.1, 0, 0);
-    // const transXneg = vec3.fromValues(-0.1, 0, 0);
-    // const transYpos = vec3.fromValues( 0, 0.1, 0);
-    // const transYneg = vec3.fromValues( 0,-0.1, 0);
-    // let temp = mat4.create();
     switch (event.key) {
         case "d":
             movingRight = true;
@@ -444,7 +385,6 @@ function keyboardDownHandler(event) {
             movingUp = true;
             break;
         case "s":
-            // mat4.translate(bbTranslation, temp, transYpos);
             movingDown = true;
             break;
         case "z":
@@ -458,7 +398,6 @@ function keyboardDownHandler(event) {
             break;
     }
     updateObjectMovement();
-    // obj.updateCoorFrames(bbTranslation);
 }
 
 function keyboardUpHandler(event) {
@@ -595,20 +534,17 @@ function lightPosChanged(ev) {
     }
     mat4.fromTranslation(lightCF, lightPos);
     gl.uniform3fv (lightPosUnif, lightPos);
-    let vertices = [
-        0, 0, 0, 1, 1, 1,
-        lightPos[0], 0, 0, 1, 1, 1,
-        lightPos[0], lightPos[1], 0, 1, 1, 1,
-        lightPos[0], lightPos[1], lightPos[2], 1, 1, 1];
-    gl.bindBuffer(gl.ARRAY_BUFFER, lineBuff);
-    gl.bufferData(gl.ARRAY_BUFFER, Float32Array.from(vertices), gl.STATIC_DRAW);
+    // let vertices = [
+    //     0, 0, 0, 1, 1, 1,
+    //     lightPos[0], 0, 0, 1, 1, 1,
+    //     lightPos[0], lightPos[1], 0, 1, 1, 1,
+    //     lightPos[0], lightPos[1], lightPos[2], 1, 1, 1];
+    // gl.bindBuffer(gl.ARRAY_BUFFER, lineBuff);
+    // gl.bufferData(gl.ARRAY_BUFFER, Float32Array.from(vertices), gl.STATIC_DRAW);
     redrawNeeded = true;
 }
 
-function updateCoefficients(coeffs){
-    gl.uniform3fv(objTintUnif, coeffs.objTintVal);
-    gl.uniform1f(ambCoeffUnif, coeffs.ambCoeffVal);
-    gl.uniform1f(diffCoeffUnif, coeffs.diffCoeffVal);
-    gl.uniform1f(specCoeffUnif, coeffs.specCoeffVal);
-    gl.uniform1f(shininessUnif, coeffs.shininessVal);
+function objectPosChanged() {
+    mat4.fromTranslation(lightCF, lightPos);
+    gl.uniform3fv (lightPosUnif, lightPos);
 }

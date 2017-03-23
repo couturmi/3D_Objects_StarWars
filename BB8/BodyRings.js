@@ -18,7 +18,9 @@ class BodyRings {
         let seg_height, seg_radius;
         let seg_angle = 2 * Math.PI / subDiv;
 
-
+        let n1 = vec3.create();
+        let n2 = vec3.create();
+        let norm = vec3.create();
         vertices.push(0,0,radius); /* tip of sphere */
         vertices.push(color[0], color[1], color[2]);
         for(let i = 1; i <= 2; i++){
@@ -30,8 +32,16 @@ class BodyRings {
                 let y = seg_radius * Math.sin(angle);
 
                 vertices.push(x, y, seg_height);
-                /* perimeter of base */
-                vertices.push(color[0], color[1], color[2]);
+                /* calculate the tangent vectors */
+                vec3.set (n1, -Math.sin(angle), Math.cos(angle), 0);
+                vec3.set (n2, -Math.sin(seg_angle*(((subDiv / 4)-1) - i)) * Math.cos(angle),
+                    -Math.sin(seg_angle*(((subDiv / 4)-1) - i)) * Math.sin(angle),
+                    Math.cos(seg_angle*(((subDiv / 4)-1) - i)));
+                /* n1 is tangent along major circle, n2 is tangent along the minor circle */
+                vec3.cross (norm, n1, n2);
+                vec3.normalize(norm, norm);
+                /* the next three floats are vertex normal */
+                vertices.push (norm[0], norm[1], norm[2]);
             }
         }
         for(let i = (subDiv / 4)*2-4; i <= (subDiv / 4)*2-3; i++){
@@ -43,8 +53,16 @@ class BodyRings {
                 let y = seg_radius * Math.sin(angle);
 
                 vertices.push(x, y, seg_height);
-                /* perimeter of base */
-                vertices.push(color[0], color[1], color[2]);
+                /* calculate the tangent vectors */
+                vec3.set (n1, -Math.sin(angle), Math.cos(angle), 0);
+                vec3.set (n2, -Math.sin(seg_angle*(((subDiv / 4)-1) - i)) * Math.cos(angle),
+                    -Math.sin(seg_angle*(((subDiv / 4)-1) - i)) * Math.sin(angle),
+                    Math.cos(seg_angle*(((subDiv / 4)-1) - i)));
+                /* n1 is tangent along major circle, n2 is tangent along the minor circle */
+                vec3.cross (norm, n1, n2);
+                vec3.normalize(norm, norm);
+                /* the next three floats are vertex normal */
+                vertices.push (norm[0], norm[1], norm[2]);
             }
         }
 
@@ -84,8 +102,8 @@ class BodyRings {
         gl.uniform3fv(objTintUnif, vec3.fromValues(this.color[0], this.color[1], this.color[2]));
         gl.uniform1f(ambCoeffUnif, 0.35);
         gl.uniform1f(diffCoeffUnif, 0.75);
-        gl.uniform1f(specCoeffUnif, 0.6);
-        gl.uniform1f(shininessUnif, 20);
+        gl.uniform1f(specCoeffUnif, 0.35);
+        gl.uniform1f(shininessUnif, 100);
 
         /* copy the coordinate frame matrix to the uniform memory in shader */
         gl.uniformMatrix4fv(modelUniform, false, coordFrame);

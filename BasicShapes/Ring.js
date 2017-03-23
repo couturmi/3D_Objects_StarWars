@@ -38,10 +38,8 @@ class Ring {
 
                 /* the first three floats are 3D (x,y,z) position */
                 vertices.push(x, y, h);
-                vec3.lerp(randColor, col1, col2, Math.random());
-                /* linear interpolation between two colors */
-                /* the next three floats are RGB */
-                vertices.push(randColor[0], randColor[1], randColor[2]);
+                /* the next three floats are vertex normal */
+                vertices.push (x, y, 0);
             }
             for (let k = 0; k < radialDiv; k++) {
                 let angle = k * 2 * Math.PI / radialDiv;
@@ -50,10 +48,8 @@ class Ring {
 
                 /* the first three floats are 3D (x,y,z) position */
                 vertices.push(x, y, h);
-                vec3.lerp(randColor, col1, col2, Math.random());
-                /* linear interpolation between two colors */
-                /* the next three floats are RGB */
-                vertices.push(randColor[0], randColor[1], randColor[2]);
+                /* the next three floats are vertex normal */
+                vertices.push (-x, -y, 0);
             }
         }
 
@@ -128,8 +124,8 @@ class Ring {
         gl.uniform3fv(objTintUnif, vec3.fromValues(this.color[0], this.color[1], this.color[2]));
         gl.uniform1f(ambCoeffUnif, 0.35);
         gl.uniform1f(diffCoeffUnif, 0.75);
-        gl.uniform1f(specCoeffUnif, 0.6);
-        gl.uniform1f(shininessUnif, 20);
+        gl.uniform1f(specCoeffUnif, 0.7);
+        gl.uniform1f(shininessUnif, 25);
 
         /* copy the coordinate frame matrix to the uniform memory in shader */
         gl.uniformMatrix4fv(modelUniform, false, coordFrame);

@@ -14,7 +14,7 @@ uniform float specularCoeff;
 uniform float shininess;
 uniform vec3 objectTint;
 uniform bool useLighting;
-uniform bvec3 isEnabled; // isEnabled: {ambient, diffuse, specular}
+uniform bvec3 isEnabled; // isEnabled: {light1, light2}
 
 varying vec4 varColor;
 

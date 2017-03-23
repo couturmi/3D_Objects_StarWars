@@ -26,9 +26,11 @@ class Hemisphere {
          in the following loop we pack both position and color
          so each tuple (x,y,z,r,g,b) describes the properties of a vertex
          */
+        let n1 = vec3.create();
+        let n2 = vec3.create();
+        let norm = vec3.create();
         vertices.push(0,0,radius); /* tip of sphere */
-        vec3.lerp (randColor, col1, col2, Math.random()); /* linear interpolation between two colors */
-        vertices.push(randColor[0], randColor[1], randColor[2]);
+        vertices.push(0, 0, 1);
         for(let i = 0; i <= ((subDiv / 4)-1); i++) {
             seg_height = radius * Math.sin(seg_angle*(((subDiv / 4)-1) - i));
             seg_radius = radius * Math.cos(seg_angle*(((subDiv / 4)-1) - i));
@@ -39,11 +41,16 @@ class Hemisphere {
 
                 /* the first three floats are 3D (x,y,z) position */
                 vertices.push(x, y, seg_height);
-                /* perimeter of base */
-                vec3.lerp(randColor, col1, col2, Math.random());
-                /* linear interpolation between two colors */
-                /* the next three floats are RGB */
-                vertices.push(randColor[0], randColor[1], randColor[2]);
+                /* calculate the tangent vectors */
+                vec3.set (n1, -Math.sin(angle), Math.cos(angle), 0);
+                vec3.set (n2, -Math.sin(seg_angle*(((subDiv / 4)-1) - i)) * Math.cos(angle),
+                    -Math.sin(seg_angle*(((subDiv / 4)-1) - i)) * Math.sin(angle),
+                    Math.cos(seg_angle*(((subDiv / 4)-1) - i)));
+                /* n1 is tangent along major circle, n2 is tangent along the minor circle */
+                vec3.cross (norm, n1, n2);
+                vec3.normalize(norm, norm);
+                /* the next three floats are vertex normal */
+                vertices.push (norm[0], norm[1], norm[2]);
             }
         }
         // vertices.push(0, 0, -radius);
@@ -88,12 +95,15 @@ class Hemisphere {
         }
     }
 
-    draw(vertexAttr, colorAttr, modelUniform, coordFrame) {
+    draw(vertexAttr, colorAttr, modelUniform, coordFrame, spec, shin) {
+        if(typeof spec === "undefined") spec = 0.1;
+        if(typeof shin === "undefined") shin = 20;
+
         gl.uniform3fv(objTintUnif, vec3.fromValues(this.color[0], this.color[1], this.color[2]));
         gl.uniform1f(ambCoeffUnif, 0.35);
         gl.uniform1f(diffCoeffUnif, 0.75);
-        gl.uniform1f(specCoeffUnif, 0.6);
-        gl.uniform1f(shininessUnif, 20);
+        gl.uniform1f(specCoeffUnif, spec);
+        gl.uniform1f(shininessUnif, shin);
 
         /* copy the coordinate frame matrix to the uniform memory in shader */
         gl.uniformMatrix4fv(modelUniform, false, coordFrame);
