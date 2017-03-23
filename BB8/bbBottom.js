@@ -2,7 +2,7 @@
  * Created by mitchcout on 2/27/2017.
  */
 class bbBottom {
-    constructor(gl, radius, color) {
+    constructor(gl, prog, radius, color) {
         this.radius = radius;
 
         //define colors
@@ -10,8 +10,8 @@ class bbBottom {
         let uniqueColor = color;
 
         //define objects
-        this.body = new UniSphere(gl, this.radius, 6, bodyColor, bodyColor);
-        this.rings = new BodyRings(gl, this.radius+0.005, uniqueColor);
+        this.body = new UniSphere(gl, prog, this.radius, 6, bodyColor, bodyColor);
+        this.rings = new BodyRings(gl, prog, this.radius+0.005, uniqueColor);
 
         //define tranformations
         // this.bodyTransform = mat4.create();

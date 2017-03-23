@@ -4,16 +4,23 @@
 var gl;
 var glCanvas;
 var persProjMat, viewMat, bbCF;
-var axisBuff, tmpMat;
+var axisBuff, tmpMat, normalMat;
 var globalAxes;
+var lightCF;
 
 var globalX, globalY, globalZ;
 
 /* Vertex shader attribute variables */
-var posAttr, colAttr;
+var posAttr, colAttr, normalAttr;
 
 /* Shader uniform variables */
-var projUnif, viewUnif, modelUnif;
+var projUnif, viewUnif, modelUnif, lightPosUnif;
+var objAmbientUnif, normalUnif, isEnabledUnif;
+var objTintUnif, ambCoeffUnif, diffCoeffUnif, specCoeffUnif, shininessUnif;
+var lightPos, useLightingUnif;
+var lineBuff, normBuff, objTint, pointLight;
+var shaderProg, redrawNeeded, showLight1, showLight2;
+var lightingComponentEnabled = [true, true, true];
 
 const IDENTITY = mat4.create();
 var BBScaleTransformation, HutScaleTransformation, RockScaleTransformation;
@@ -23,14 +30,77 @@ var movingLeft, movingRight, movingUp, movingDown;
 var rotateX, rotateY, rotateZ;
 var currentObject;
 var coneSpinAngle;
-var obj, obj2, hut1, hut2, hut3, hut4, ground;
+var obj, obj2, hut1, hut2, hut3, hut4, ground, sky;
 var rockArray = [];
 var rockTransformationsArray = [];
-var shaderProg;
 
 function main() {
     glCanvas = document.getElementById("gl-canvas");
 
+    /*lighting*/
+    let light1CheckBox = document.getElementById("light1");
+    light1CheckBox.addEventListener('change', ev => {
+        lightingComponentEnabled[0] = ev.target.checked;
+        gl.uniform3iv (isEnabledUnif, lightingComponentEnabled);
+        redrawNeeded = true;
+    }, false);
+    let light2CheckBox = document.getElementById("light2");
+    light2CheckBox.addEventListener('change', ev => {
+        lightingComponentEnabled[1] = ev.target.checked;
+        gl.uniform3iv (isEnabledUnif, lightingComponentEnabled);
+        redrawNeeded = true;
+    }, false);
+    // let ambientCheckBox = document.getElementById("enableAmbient");
+    // ambientCheckBox.addEventListener('change', ev => {
+    //     lightingComponentEnabled[0] = ev.target.checked;
+    //     gl.uniform3iv (isEnabledUnif, lightingComponentEnabled);
+    //     redrawNeeded = true;
+    // }, false);
+    // let diffuseCheckBox = document.getElementById("enableDiffuse");
+    // diffuseCheckBox.addEventListener('change', ev => {
+    //     lightingComponentEnabled[1] = ev.target.checked;
+    //     gl.uniform3iv (isEnabledUnif, lightingComponentEnabled);
+    //     redrawNeeded = true;
+    // }, false);
+    // let specularCheckBox = document.getElementById("enableSpecular");
+    // specularCheckBox.addEventListener('change', ev => {
+    //     lightingComponentEnabled[2] = ev.target.checked;
+    //     gl.uniform3iv (isEnabledUnif, lightingComponentEnabled);
+    //     redrawNeeded = true;
+    // }, false);
+    // let ambCoeffSlider = document.getElementById("amb-coeff");
+    // ambCoeffSlider.addEventListener('input', ev => {
+    //     gl.uniform1f(ambCoeffUnif, ev.target.value);
+    //     redrawNeeded = true;
+    // }, false);
+    // ambCoeffSlider.value = Math.random() * 0.2;
+    // let diffCoeffSlider = document.getElementById("diff-coeff");
+    // diffCoeffSlider.addEventListener('input', ev => {
+    //     gl.uniform1f(diffCoeffUnif, ev.target.value);
+    //     redrawNeeded = true;
+    // }, false);
+    // diffCoeffSlider.value = 0.5 + 0.5 * Math.random();  // random in [0.5, 1.0]
+    // let specCoeffSlider = document.getElementById("spec-coeff");
+    // specCoeffSlider.addEventListener('input', ev => {
+    //     gl.uniform1f(specCoeffUnif, ev.target.value);
+    //     redrawNeeded = true;
+    // }, false);
+    // specCoeffSlider.value = Math.random();
+    // let shinySlider = document.getElementById("spec-shiny");
+    // shinySlider.addEventListener('input', ev => {
+    //     gl.uniform1f(shininessUnif, ev.target.value);
+    //     redrawNeeded = true;
+    // }, false);
+    // shinySlider.value = Math.floor(1 + Math.random() * shinySlider.max);
+
+    let lightxslider = document.getElementById("lightx");
+    let lightyslider = document.getElementById("lighty");
+    let lightzslider = document.getElementById("lightz");
+    lightxslider.addEventListener('input', lightPosChanged, false);
+    lightyslider.addEventListener('input', lightPosChanged, false);
+    lightzslider.addEventListener('input', lightPosChanged, false);
+
+    /*objects*/
     gl = WebGLUtils.setupWebGL(glCanvas, null);
     axisBuff = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, axisBuff);
@@ -45,15 +115,31 @@ function main() {
             gl.enable(gl.DEPTH_TEST);    /* enable hidden surface removal */
             //gl.enable(gl.CULL_FACE);     /* cull back facing polygons */
             //gl.cullFace(gl.BACK);
+            lineBuff = gl.createBuffer();
+            normBuff = gl.createBuffer();
             posAttr = gl.getAttribLocation(prog, "vertexPos");
             colAttr = gl.getAttribLocation(prog, "vertexCol");
+            normalAttr = gl.getAttribLocation(prog, "vertexNormal");
+            lightPosUnif = gl.getUniformLocation(prog, "lightPosWorld");
             projUnif = gl.getUniformLocation(prog, "projection");
             viewUnif = gl.getUniformLocation(prog, "view");
             modelUnif = gl.getUniformLocation(prog, "modelCF");
+            normalUnif = gl.getUniformLocation(prog, "normalMat");
+            useLightingUnif = gl.getUniformLocation (prog, "useLighting");
+            objTintUnif = gl.getUniformLocation(prog, "objectTint");
+            ambCoeffUnif = gl.getUniformLocation(prog, "ambientCoeff");
+            diffCoeffUnif = gl.getUniformLocation(prog, "diffuseCoeff");
+            specCoeffUnif = gl.getUniformLocation(prog, "specularCoeff");
+            shininessUnif = gl.getUniformLocation(prog, "shininess");
+            isEnabledUnif = gl.getUniformLocation(prog, "isEnabled");
             gl.enableVertexAttribArray(posAttr);
             gl.enableVertexAttribArray(colAttr);
+            // gl.enableVertexAttribArray(normalAttr);
+
             persProjMat = mat4.create();
             viewMat = mat4.create();
+            normalMat = mat3.create();
+            lightCF = mat4.create();
             bbCF = mat4.create();
             tmpMat = mat4.create();
             bbTranslation = mat4.create();
@@ -70,7 +156,29 @@ function main() {
             rotateX = false;
             rotateY = false;
             rotateZ = false;
-            updateObject()
+            updateObject();
+
+            /* light Position */
+            lightPos = vec3.fromValues(3, -3, 4);
+            mat4.fromTranslation(lightCF, lightPos);
+            lightx.value = lightPos[0];
+            lighty.value = lightPos[1];
+            lightz.value = lightPos[2];
+            gl.uniform3fv (lightPosUnif, lightPos);
+            let vertices = [0, 0, 0, 1, 1, 1,
+                lightPos[0], 0, 0, 1, 1, 1,
+                lightPos[0], lightPos[1], 0, 1, 1, 1,
+                lightPos[0], lightPos[1], lightPos[2], 1, 1, 1];
+            gl.bindBuffer(gl.ARRAY_BUFFER, lineBuff);
+            gl.bufferData(gl.ARRAY_BUFFER, Float32Array.from(vertices), gl.STATIC_DRAW);
+
+            // /* lighting coefficients */
+            // objTint = vec3.fromValues(214/255,216/255,162/255);
+            // gl.uniform3fv(objTintUnif, objTint);
+            // gl.uniform1f(ambCoeffUnif, ambCoeffSlider.value);
+            // gl.uniform1f(diffCoeffUnif, diffCoeffSlider.value);
+            // gl.uniform1f(specCoeffUnif, specCoeffSlider.value);
+            // gl.uniform1f(shininessUnif, shinySlider.value);
 
             BBScaleTransformation = mat4.create();
             let bbScale = vec3.fromValues(0.5,0.5,0.5);
@@ -85,49 +193,54 @@ function main() {
             /* define colors */
             let orange = vec3.fromValues(255/255,128/255,0/255);
             let blue = vec3.fromValues(0/255,93/255,255/255);
+            let yellow = vec3.fromValues (0xe7/255, 0xf2/255, 0x4d/255);
 
             /* define objects */
-            ground = new Ground(gl);
+            gl.uniform3iv (isEnabledUnif, lightingComponentEnabled);
+            ground = new Ground(gl, prog);
+            sky = new Sky(gl);
 
-            obj = new BB8(gl, 0.5, orange);
+            obj = new BB8(gl, prog, 0.5, orange);
             obj.updateCoorFrames(BBScaleTransformation);
 
-            obj2 = new BB8(gl, 0.3, blue);
+            obj2 = new BB8(gl, prog, 0.3, blue);
             this.obj2StartingPosition = mat4.create();
             let offset = vec3.fromValues (1.5, 1.0, 0);
             mat4.translate(this.obj2StartingPosition, this.obj2StartingPosition, offset);
             obj2.updateCoorFrames(this.obj2StartingPosition);
             obj2.updateCoorFrames(BBScaleTransformation);
 
-            hut1 = new Hut(gl);
+            hut1 = new Hut(gl, prog);
             let offsethut1 = vec3.fromValues (1.5, -3, 0);
             mat4.translate(hut1Transformation, hut1Transformation, offsethut1);
             mat4.rotateZ(hut1Transformation,hut1Transformation,Math.PI/5);
             mat4.mul(hut1Transformation,hut1Transformation,HutScaleTransformation);
 
-            hut2 = new Hut(gl);
+            hut2 = new Hut(gl, prog);
             let offsethut2 = vec3.fromValues (2.75, -1.75, 0);
             mat4.translate(hut2Transformation, hut2Transformation, offsethut2);
             mat4.rotateZ(hut2Transformation,hut2Transformation,Math.PI/4);
             mat4.mul(hut2Transformation,hut2Transformation,HutScaleTransformation);
 
-            hut3 = new Hut(gl);
+            hut3 = new Hut(gl, prog);
             let offsethut3 = vec3.fromValues (-2.5, 3, 0);
             mat4.translate(hut3Transformation, hut3Transformation, offsethut3);
             mat4.rotateZ(hut3Transformation,hut3Transformation,Math.PI*1.25);
             mat4.mul(hut3Transformation,hut3Transformation,HutScaleTransformation);
 
-            hut4 = new Hut(gl);
+            hut4 = new Hut(gl, prog);
             let offsethut4 = vec3.fromValues (-3, -1.75, 0);
             mat4.translate(hut4Transformation, hut4Transformation, offsethut4);
             mat4.rotateZ(hut4Transformation,hut4Transformation,-Math.PI/4);
             mat4.mul(hut4Transformation,hut4Transformation,HutScaleTransformation);
 
-            randomizeRocks();
+            randomizeRocks(prog);
 
-            globalAxes = new Axes(gl);
+            pointLight = new UniSphere(gl, prog, 0.03, 3, yellow, yellow);
+
+            globalAxes = new Axes(gl, prog);
             coneSpinAngle = 0;
-            resizeWindow();
+            // resizeWindow();
             render();
         });
 }
@@ -167,54 +280,104 @@ function updateObject(){
 
 function resizeWindow() {
     //resize window
-    let size = Math.min(0.98 * window.innerWidth, 0.65 * window.innerHeight);
-    glCanvas.width = size;
-    glCanvas.height = size;
+    let width = 0.99 * window.innerWidth;
+    let height = 0.74 * window.innerHeight;
+    glCanvas.width = width;
+    glCanvas.height = height;
     //set perspective
     mat4.perspective(persProjMat,
-        Math.PI/3,  /* 60 degrees vertical field of view */
-        1,          /* must be width/height ratio */
-        1,          /* near plane at Z=1 */
+        Math.PI/3,   /* 60 degrees vertical field of view */
+        width/height,/* must be width/height ratio */
+        1,           /* near plane at Z=1 */
         20);
 }
 
 function render() {
+    resizeWindow();
     gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
     draw3D();
-    // coneSpinAngle += 1;  /* add 1 degree */
     requestAnimationFrame(render);
 }
 
 function drawScene() {
-    ground.draw(posAttr, colAttr, modelUnif, IDENTITY);
+    gl.uniform1i (useLightingUnif, false);
+    gl.disableVertexAttribArray(normalAttr);
+    gl.enableVertexAttribArray(colAttr);
+
+    /* Use LINE_STRIP to mark light position */
+    gl.uniformMatrix4fv(modelUnif, false, IDENTITY);
+    gl.bindBuffer(gl.ARRAY_BUFFER, lineBuff);
+    gl.vertexAttribPointer(posAttr, 3, gl.FLOAT, false, 24, 0);
+    gl.vertexAttribPointer(colAttr, 3, gl.FLOAT, false, 24, 12);
+    gl.drawArrays(gl.LINE_STRIP, 0, 4);
+
+    pointLight.draw(posAttr, colAttr, modelUnif, lightCF);
+
+    gl.uniform1i (useLightingUnif, true);
+    gl.disableVertexAttribArray(colAttr);
+    gl.enableVertexAttribArray(normalAttr);
+    //
+    // this.torus.draw(posAttr, normalAttr, modelUnif, IDENTITY);
+    // updateCoefficients(ground.getObjectCoefficients());
+    ground.draw(posAttr, normalAttr, modelUnif, IDENTITY);
+
+    gl.uniform1i (useLightingUnif, false);
+    gl.disableVertexAttribArray(normalAttr);
+    gl.enableVertexAttribArray(colAttr);
+
+    // ground.drawNormal(posAttr, colAttr, modelUnif, IDENTITY);
+    // ground.drawVectorsTo(gl, lightPos, posAttr, colAttr, modelUnif, IDENTITY);
+
+    sky.draw(posAttr, colAttr, modelUnif, IDENTITY);
     // globalAxes.draw(posAttr, colAttr, modelUnif, IDENTITY);
 
     if (typeof obj !== 'undefined') {
         checkIfMoveBB(1);
-        obj.draw(posAttr, colAttr, modelUnif, IDENTITY);
+        gl.uniform1i (useLightingUnif, true);
+        gl.disableVertexAttribArray(colAttr);
+        gl.enableVertexAttribArray(normalAttr);
+        obj.draw(posAttr, normalAttr, modelUnif, IDENTITY);
     }
     if (typeof obj2 !== 'undefined') {
         checkIfMoveBB(2);
-        obj2.draw(posAttr, colAttr, modelUnif, IDENTITY);
+        gl.uniform1i (useLightingUnif, true);
+        gl.disableVertexAttribArray(colAttr);
+        gl.enableVertexAttribArray(normalAttr);
+        obj2.draw(posAttr, normalAttr, modelUnif, IDENTITY);
     }
     if (typeof hut1 !== 'undefined') {
         checkIfRotateHut(1);
-        hut1.draw(posAttr, colAttr, modelUnif, hut1Transformation);
+        gl.uniform1i (useLightingUnif, true);
+        gl.disableVertexAttribArray(colAttr);
+        gl.enableVertexAttribArray(normalAttr);
+        hut1.draw(posAttr, normalAttr, modelUnif, hut1Transformation);
     }
     if (typeof hut2 !== 'undefined') {
         checkIfRotateHut(2);
-        hut2.draw(posAttr, colAttr, modelUnif, hut2Transformation);
+        gl.uniform1i (useLightingUnif, true);
+        gl.disableVertexAttribArray(colAttr);
+        gl.enableVertexAttribArray(normalAttr);
+        hut2.draw(posAttr, normalAttr, modelUnif, hut2Transformation);
     }
     if (typeof hut3 !== 'undefined') {
         checkIfRotateHut(3);
-        hut3.draw(posAttr, colAttr, modelUnif, hut3Transformation);
+        gl.uniform1i (useLightingUnif, true);
+        gl.disableVertexAttribArray(colAttr);
+        gl.enableVertexAttribArray(normalAttr);
+        hut3.draw(posAttr, normalAttr, modelUnif, hut3Transformation);
     }
     if (typeof hut4 !== 'undefined') {
         checkIfRotateHut(4);
-        hut4.draw(posAttr, colAttr, modelUnif, hut4Transformation);
+        gl.uniform1i (useLightingUnif, true);
+        gl.disableVertexAttribArray(colAttr);
+        gl.enableVertexAttribArray(normalAttr);
+        hut4.draw(posAttr, normalAttr, modelUnif, hut4Transformation);
     }
+    gl.uniform1i (useLightingUnif, true);
+    gl.disableVertexAttribArray(colAttr);
+    gl.enableVertexAttribArray(normalAttr);
     for(let i = 0; i < rockArray.length; i++){
-        rockArray[i].draw(posAttr, colAttr, modelUnif, rockTransformationsArray[i]);
+        rockArray[i].draw(posAttr, normalAttr, modelUnif, rockTransformationsArray[i]);
     }
 
 }
@@ -223,16 +386,19 @@ function draw3D() {
     /* We must update the projection and view matrices in the shader */
     gl.uniformMatrix4fv(projUnif, false, persProjMat);
     gl.uniformMatrix4fv(viewUnif, false, viewMat)
+    mat4.mul (tmpMat, viewMat, IDENTITY);
+    mat3.normalFromMat4 (normalMat, tmpMat);
+    gl.uniformMatrix3fv (normalUnif, false, normalMat);
     gl.viewport(0, 0, glCanvas.width, glCanvas.height);
     drawScene();
 }
 
-function randomizeRocks() {
+function randomizeRocks(prog) {
     let size = 8;
 
     for(let i = 0; i < size; i++){
         let rockSize = (Math.random() * 0.6)+0.2;
-        rockArray[i] = new RockType1(gl, rockSize);
+        rockArray[i] = new RockType1(gl, prog, rockSize);
     }
     for(let i = 0; i < size; i++) {
         rockTransformationsArray[i] = mat4.create();
@@ -415,4 +581,34 @@ function checkIfRotateHut(num) {
     }
 }
 
+function lightPosChanged(ev) {
+    switch (ev.target.id) {
+        case 'lightx':
+            lightPos[0] = ev.target.value;
+            break;
+        case 'lighty':
+            lightPos[1] = ev.target.value;
+            break;
+        case 'lightz':
+            lightPos[2] = ev.target.value;
+            break;
+    }
+    mat4.fromTranslation(lightCF, lightPos);
+    gl.uniform3fv (lightPosUnif, lightPos);
+    let vertices = [
+        0, 0, 0, 1, 1, 1,
+        lightPos[0], 0, 0, 1, 1, 1,
+        lightPos[0], lightPos[1], 0, 1, 1, 1,
+        lightPos[0], lightPos[1], lightPos[2], 1, 1, 1];
+    gl.bindBuffer(gl.ARRAY_BUFFER, lineBuff);
+    gl.bufferData(gl.ARRAY_BUFFER, Float32Array.from(vertices), gl.STATIC_DRAW);
+    redrawNeeded = true;
+}
 
+function updateCoefficients(coeffs){
+    gl.uniform3fv(objTintUnif, coeffs.objTintVal);
+    gl.uniform1f(ambCoeffUnif, coeffs.ambCoeffVal);
+    gl.uniform1f(diffCoeffUnif, coeffs.diffCoeffVal);
+    gl.uniform1f(specCoeffUnif, coeffs.specCoeffVal);
+    gl.uniform1f(shininessUnif, coeffs.shininessVal);
+}

@@ -2,15 +2,15 @@
  * Created by mitchcout on 3/5/2017.
  */
 class RockType1 {
-    constructor(gl, size) {
+    constructor(gl, prog, size) {
         //define colors
         let rockColor = vec3.fromValues (101/255,102/255,92/255);
 
         //define objects
-        this.part1 = new Cylinder(gl, size*0.6, size*0.7, size*0.3, 15, rockColor, rockColor);
-        this.part2 = new Cylinder(gl, size*0.4, size*0.6, size*0.1, 15, rockColor, rockColor);
-        this.part3 = new Cylinder(gl, size*0.3, size*0.4, size*0.5, 15, rockColor, rockColor);
-        this.part4 = new Cylinder(gl, size*0.2, size*0.5, size*0.2, 15, rockColor, rockColor);
+        this.part1 = new Cylinder(gl, prog, size*0.6, size*0.7, size*0.3, 15, rockColor, rockColor);
+        this.part2 = new Cylinder(gl, prog, size*0.4, size*0.6, size*0.1, 15, rockColor, rockColor);
+        this.part3 = new Cylinder(gl, prog, size*0.3, size*0.4, size*0.5, 15, rockColor, rockColor);
+        this.part4 = new Cylinder(gl, prog, size*0.2, size*0.5, size*0.2, 15, rockColor, rockColor);
 
         //define tranformations
         this.part1Transformation = mat4.create();

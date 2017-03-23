@@ -10,12 +10,20 @@ class UniSphere {
      * @param {vec3}   [col1]    color #1 to use
      * @param {vec3}   [col2]    color #2 to use
      */
-    constructor(gl, RADIUS, subDiv, col1, col2) {
+    constructor(gl, prog, RADIUS, subDiv, col1, col2) {
+        objTintUnif = gl.getUniformLocation(prog, "objectTint");
+        ambCoeffUnif = gl.getUniformLocation(prog, "ambientCoeff");
+        diffCoeffUnif = gl.getUniformLocation(prog, "diffuseCoeff");
+        specCoeffUnif = gl.getUniformLocation(prog, "specularCoeff");
+        shininessUnif = gl.getUniformLocation(prog, "shininess");
+        isEnabledUnif = gl.getUniformLocation(prog, "isEnabled");
 
         /* if colors are undefined, generate random colors */
         if (typeof col1 === "undefined") col1 = vec3.fromValues(Math.random(), Math.random(), Math.random());
         if (typeof col2 === "undefined") col2 = vec3.fromValues(Math.random(), Math.random(), Math.random());
         let randColor = vec3.create();
+        vec3.lerp(randColor, col1, col2, Math.random());
+        this.color = randColor;
 
         this.RADIUS = RADIUS;
         this.vex = [];
@@ -95,6 +103,12 @@ class UniSphere {
      * @param {mat4} coordFrame a JS mat4 variable that holds the actual coordinate frame of the object
      */
     draw(vertexAttr, colorAttr, modelUniform, coordFrame) {
+        gl.uniform3fv(objTintUnif, vec3.fromValues(this.color[0], this.color[1], this.color[2]));
+        gl.uniform1f(ambCoeffUnif, 0.35);
+        gl.uniform1f(diffCoeffUnif, 0.75);
+        gl.uniform1f(specCoeffUnif, 0.6);
+        gl.uniform1f(shininessUnif, 20);
+
         /* copy the coordinate frame matrix to the uniform memory in shader */
         gl.uniformMatrix4fv(modelUniform, false, coordFrame);
 

@@ -1,0 +1,13 @@
+.controls-group{
+    border: 1px solid gray;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 4px;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+ul.no-margins{
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0em;
+}

@@ -4,7 +4,7 @@
 
 class BB8 {
 
-    constructor(gl, radius, color) {
+    constructor(gl, prog, radius, color) {
         this.radius = radius;
 
         this.movingLeft = false;
@@ -17,8 +17,8 @@ class BB8 {
         let uniqueColor = color;
 
         //define objects
-        this.body = new bbBottom(gl, radius, uniqueColor);
-        this.head = new bbHead(gl, this.body.getRadius()*2, uniqueColor);
+        this.body = new bbBottom(gl, prog, radius, uniqueColor);
+        this.head = new bbHead(gl, prog, this.body.getRadius()*2, uniqueColor);
 
         //define tranformations
         this.bodyTransform = mat4.create();

@@ -3,11 +3,14 @@
     <head>
         <meta charset="UTF-8">
         <title>Object Transformation</title>
+        <link rel="stylesheet" href="indexStyle.css">
         <script src="Utils/webgl-utils.js"></script>
         <script src="Utils/shader-utils.js"></script>
         <script src="gl-matrix-min.js"></script>
         <script src="BasicShapes/Axes.js"></script>
         <script src="BasicShapes/Cylinder.js"></script>
+        <script src="BasicShapes/GeometricObject.js"></script>
+        <script src="BasicShapes/Torus.js"></script>
         <script src="BasicShapes/Cube.js"></script>
         <script src="BasicShapes/Ring.js"></script>
         <script src="BasicShapes/RingHalf.js"></script>
@@ -20,30 +23,58 @@
         <script src="Hut/Hut.js"></script>
         <script src="Rocks/RockType1.js"></script>
         <script src="Ground.js"></script>
+        <script src="Sky.js"></script>
         <script src="render.js"></script>
     </head>
     <h1>Star Wars: BB-8 & Friends</h1>
-<body onload="main()">
-<label><b>Object</b>:</label>
-<select id="objects" onchange="updateObject();">
-    <option value="bb8">BB-8</option>
-    <option value="bb6">BB-6</option>
-    <option value="hut1">Hut 1</option>
-    <option value="hut2">Hut 2</option>
-    <option value="hut3">Hut 3</option>
-    <option value="hut4">Hut 4</option>
-</select><br>
-<span>For Droids: Use [w,s,a,d] keys to move droid position.</span><br>
-<span>For Huts: Use [z,x,y] keys to change hut orientation</span>
-<hr>
-<div>
-    <label><b>Perspective</b>:</label><br>
+    <hr>
+<body onload="main()" style="-webkit-margin-after: 0em;">
+<div class="controls-group">
+    <label><b>Object</b>:</label>
+    <select id="objects" onchange="updateObject();">
+        <option value="bb8">BB-8</option>
+        <option value="bb6">BB-6</option>
+        <option value="hut1">Hut 1</option>
+        <option value="hut2">Hut 2</option>
+        <option value="hut3">Hut 3</option>
+        <option value="hut4">Hut 4</option>
+    </select>
+    <span>For Droids: Use [w,s,a,d] keys to move droid position.</span>
+    <span>For Huts: Use [z,x,y] keys to change hut orientation</span>
+</div>
+<div class="controls-group">
+    <label><b>Perspective</b>:</label>
     <span>Press [1,2,3,4] keys for pre-made scenes</span>
-    <ul>
+    <ul class="no-margins">
         <li>X : -1 <input id="global-X" type="range" min="-1" max="1" step="0.05" value="-0.25" oninput="setPerspective()"> 1</li>
         <li>Y : -1 <input id="global-Y" type="range" min="-1" max="1" step="0.05" value="1" oninput="setPerspective()"> 1</li>
         <li>Z : 0 <input id="global-Z" type="range" min="0" max="2" step="0.05" value="0.5" oninput="setPerspective()"> 2</li>
     </ul>
+</div>
+<div id="vectorcontrol" class="controls-group">
+    <span><input id="light1" type="checkbox" checked> Light 1</span>
+    <span><input id="light2" type="checkbox" checked> Light 2</span>
+    </ul>
+</div>
+<!--<div class="controls-group">
+    <label><b>Object Reflection Coefficients:</b></label>
+    <span>Ambient: <input id="amb-coeff" type="range" min="0" max="0.3" step="0.01">
+    <input id="enableAmbient" type="checkbox" checked>
+    </span>
+    <span>Diffuse: <input id="diff-coeff" type="range" min="0" max="1" step="0.01">
+    <input id="enableDiffuse" type="checkbox" checked>
+    </span>
+    <span>Specular: <input id="spec-coeff" type="range" min="0" max="1" step="0.02">
+    <input id="enableSpecular" type="checkbox" checked>
+    </span>
+    <span>Shininess: <input id="spec-shiny" type="range" min="1" max="128" step="1">
+    </span>
+</div> -->
+<div id="lightcontrol" class="controls-group">
+    <label><b>Light Position:</b></label>
+    <span>X: <input id="lightx" type="range" min="-3" max="3" step="0.05"></span>
+    <span>Y: <input id="lighty" type="range" min="-3" max="3" step="0.05"></span>
+    <span>Z: <input id="lightz" type="range" min="-1" max="5" step="0.05"></span>
 </div>
 <canvas id="gl-canvas"></canvas>
 </body>

@@ -2,7 +2,7 @@
  * Created by mitchcout on 2/27/2017.
  */
 class bbHead {
-    constructor(gl, zOffset, color) {
+    constructor(gl, prog, zOffset, color) {
         let z = zOffset;
         let headRadius = 0.27;
 
@@ -15,15 +15,15 @@ class bbHead {
         let uniqueColor = color;
 
         //define objects
-        this.headBotSection = new Cylinder(gl, headRadius, headRadius*0.75, 0.06, 100, botSectionColor, botSectionColor);
-        this.headMidSection = new Cylinder(gl, headRadius, headRadius, 0.03, 100, midSectionColor, midSectionColor);
-        this.headTopSection = new Hemisphere(gl, headRadius, 28, mainColor, mainColor);
-        this.eyeRing1 = new Ring(gl, 0.075, 0.05, 0.05, 20, 1, black, black);
-        this.eyeRing2 = new Ring(gl, 0.03, 0.02, 0.025, 20, 1, black, black);
+        this.headBotSection = new Cylinder(gl, prog, headRadius, headRadius*0.75, 0.06, 100, botSectionColor, botSectionColor);
+        this.headMidSection = new Cylinder(gl, prog, headRadius, headRadius, 0.03, 100, midSectionColor, midSectionColor);
+        this.headTopSection = new Hemisphere(gl, prog, headRadius, 28, mainColor, mainColor);
+        this.eyeRing1 = new Ring(gl, prog, 0.075, 0.05, 0.05, 20, 1, black, black);
+        this.eyeRing2 = new Ring(gl, prog, 0.03, 0.02, 0.025, 20, 1, black, black);
         this.eye1;
         this.eye2;
-        this.antenna1 = new Cylinder(gl, 0.01, 0.01, headRadius, 20, antennaColor, antennaColor);
-        this.antenna2 = new Cylinder(gl, 0.01, 0.01, headRadius/2, 20, antennaColor, antennaColor);
+        this.antenna1 = new Cylinder(gl, prog, 0.01, 0.01, headRadius, 20, antennaColor, antennaColor);
+        this.antenna2 = new Cylinder(gl, prog, 0.01, 0.01, headRadius/2, 20, antennaColor, antennaColor);
 
         //define tranformations
         z -= (z*0.04);
@@ -66,10 +66,10 @@ class bbHead {
 
     draw (vertexAttr, colorAttr, modelUniform, coordFrame) {
         mat4.mul (this.tmp, coordFrame, this.headBotTransform);
-        this.headBotSection.draw(vertexAttr, colorAttr, modelUniform, this.tmp);
+        this.headBotSection.draw(vertexAttr, colorAttr, modelUniform, this.tmp, 0.7, 15);
 
         mat4.mul (this.tmp, coordFrame, this.headMidTransform);
-        this.headMidSection.draw(vertexAttr, colorAttr, modelUniform, this.tmp);
+        this.headMidSection.draw(vertexAttr, colorAttr, modelUniform, this.tmp, 0.7, 15);
 
         mat4.mul (this.tmp, coordFrame, this.headTopTransform);
         this.headTopSection.draw(vertexAttr, colorAttr, modelUniform, this.tmp);

@@ -2,19 +2,18 @@
  * Created by mitchcout on 3/5/2017.
  */
 class Hut {
-    constructor(gl) {
+    constructor(gl, prog) {
         let domeRadius = 0.4;
 
         //define colors
         let hutColor = vec3.fromValues (186/255,188/255,133/255);
-        let doorColor = vec3.fromValues (167/255,169/255,115/255);
 
         //define objects
-        this.domeTop = new Hemisphere(gl, domeRadius, 28, hutColor, hutColor);
-        this.domeBottom = new Cylinder(gl, domeRadius, domeRadius*1.1, domeRadius/2, 100, hutColor, hutColor);
-        this.doorwayTop = new RingHalf(gl, domeRadius/3, domeRadius/3-0.05, 0.3, 20, 1, doorColor, doorColor);
-        this.doorwayRight = new Cube(gl, 0.05, 1, doorColor, doorColor, doorColor);
-        this.doorwayLeft = new Cube(gl, 0.05, 1, doorColor, doorColor, doorColor);
+        this.domeTop = new Hemisphere(gl, prog, domeRadius, 28, hutColor, hutColor);
+        this.domeBottom = new Cylinder(gl, prog, domeRadius, domeRadius*1.1, domeRadius/2, 100, hutColor, hutColor);
+        this.doorwayTop = new RingHalf(gl, prog, domeRadius/3, domeRadius/3-0.05, 0.3, 20, 1, hutColor, hutColor);
+        this.doorwayRight = new Cube(gl, prog, 0.05, 1, hutColor, hutColor, hutColor);
+        this.doorwayLeft = new Cube(gl, prog, 0.05, 1, hutColor, hutColor, hutColor);
 
         //define tranformations
         this.domeTopTransformation = mat4.create();

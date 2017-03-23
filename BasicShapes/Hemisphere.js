@@ -2,12 +2,20 @@
  * Created by Mitch Couturier on 2/27/17.
  */
 class Hemisphere {
-    constructor (gl, radius, subDiv, col1, col2) {
+    constructor (gl, prog, radius, subDiv, col1, col2) {
+        objTintUnif = gl.getUniformLocation(prog, "objectTint");
+        ambCoeffUnif = gl.getUniformLocation(prog, "ambientCoeff");
+        diffCoeffUnif = gl.getUniformLocation(prog, "diffuseCoeff");
+        specCoeffUnif = gl.getUniformLocation(prog, "specularCoeff");
+        shininessUnif = gl.getUniformLocation(prog, "shininess");
+        isEnabledUnif = gl.getUniformLocation(prog, "isEnabled");
 
         /* if colors are undefined, generate random colors */
         if (typeof col1 === "undefined") col1 = vec3.fromValues(Math.random(), Math.random(), Math.random());
         if (typeof col2 === "undefined") col2 = vec3.fromValues(Math.random(), Math.random(), Math.random());
         let randColor = vec3.create();
+        vec3.lerp(randColor, col1, col2, Math.random());
+        this.color = randColor;
         let vertices = [];
         this.vbuff = gl.createBuffer();
 
@@ -81,6 +89,12 @@ class Hemisphere {
     }
 
     draw(vertexAttr, colorAttr, modelUniform, coordFrame) {
+        gl.uniform3fv(objTintUnif, vec3.fromValues(this.color[0], this.color[1], this.color[2]));
+        gl.uniform1f(ambCoeffUnif, 0.35);
+        gl.uniform1f(diffCoeffUnif, 0.75);
+        gl.uniform1f(specCoeffUnif, 0.6);
+        gl.uniform1f(shininessUnif, 20);
+
         /* copy the coordinate frame matrix to the uniform memory in shader */
         gl.uniformMatrix4fv(modelUniform, false, coordFrame);
 

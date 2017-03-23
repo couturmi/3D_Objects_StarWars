@@ -4,11 +4,20 @@
 // Create a cylinder whose Z-axis as its axis of symmetry, base at Z=-h/2, top at Z=+h/2
 class Cylinder {
   /* subDiv: number of subdivisions for the circle/cone base */
-  constructor (gl, topRadius, botRadius, height, subDiv, col1, col2) {
+  constructor (gl, prog, topRadius, botRadius, height, subDiv, col1, col2) {
+    objTintUnif = gl.getUniformLocation(prog, "objectTint");
+    ambCoeffUnif = gl.getUniformLocation(prog, "ambientCoeff");
+    diffCoeffUnif = gl.getUniformLocation(prog, "diffuseCoeff");
+    specCoeffUnif = gl.getUniformLocation(prog, "specularCoeff");
+    shininessUnif = gl.getUniformLocation(prog, "shininess");
+    isEnabledUnif = gl.getUniformLocation(prog, "isEnabled");
+
     if (typeof col1 === "undefined") col1 = vec3.fromValues(0xff/255, 0x59/255, 0x59/255);
     if (typeof col2 === "undefined") col2 = vec3.fromValues(0xFF/255, 0xC5/255, 0x6C/255);
     let vertices = [];
     let randColor = vec3.create();
+    vec3.lerp(randColor, col1, col2, Math.random());
+    this.color = randColor;
     this.vbuff = gl.createBuffer();
     this.heightVar = height;
 
@@ -86,7 +95,16 @@ class Cylinder {
     return this.heightVar;
   }
 
-  draw (vertexAttr, colorAttr, modelUniform, coordFrame) {
+  draw (vertexAttr, colorAttr, modelUniform, coordFrame, spec, shin) {
+    if(typeof spec === "undefined") spec = 0.6;
+    if(typeof shin === "undefined") shin = 28;
+
+    gl.uniform3fv(objTintUnif, vec3.fromValues(this.color[0], this.color[1], this.color[2]));
+    gl.uniform1f(ambCoeffUnif, 0.35);
+    gl.uniform1f(diffCoeffUnif, 0.75);
+    gl.uniform1f(specCoeffUnif, spec);
+    gl.uniform1f(shininessUnif, shin);
+
     gl.uniformMatrix4fv(modelUniform, false, coordFrame);
     gl.bindBuffer(gl.ARRAY_BUFFER, this.vbuff);
     gl.vertexAttribPointer(vertexAttr, 3, gl.FLOAT, false, 24, 0);

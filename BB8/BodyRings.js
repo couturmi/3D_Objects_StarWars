@@ -2,7 +2,15 @@
  * Created by mitchcout on 3/5/2017.
  */
 class BodyRings {
-    constructor(gl, radius, color) {
+    constructor(gl, prog, radius, color) {
+        this.color = color;
+        objTintUnif = gl.getUniformLocation(prog, "objectTint");
+        ambCoeffUnif = gl.getUniformLocation(prog, "ambientCoeff");
+        diffCoeffUnif = gl.getUniformLocation(prog, "diffuseCoeff");
+        specCoeffUnif = gl.getUniformLocation(prog, "specularCoeff");
+        shininessUnif = gl.getUniformLocation(prog, "shininess");
+        isEnabledUnif = gl.getUniformLocation(prog, "isEnabled");
+
         let subDiv = 35;
         let vertices = [];
         this.vbuff = gl.createBuffer();
@@ -73,6 +81,12 @@ class BodyRings {
     }
 
     draw (vertexAttr, colorAttr, modelUniform, coordFrame) {
+        gl.uniform3fv(objTintUnif, vec3.fromValues(this.color[0], this.color[1], this.color[2]));
+        gl.uniform1f(ambCoeffUnif, 0.35);
+        gl.uniform1f(diffCoeffUnif, 0.75);
+        gl.uniform1f(specCoeffUnif, 0.6);
+        gl.uniform1f(shininessUnif, 20);
+
         /* copy the coordinate frame matrix to the uniform memory in shader */
         gl.uniformMatrix4fv(modelUniform, false, coordFrame);
 
