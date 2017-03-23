@@ -4,6 +4,7 @@
 class bbBottom {
     constructor(gl, prog, radius, color) {
         this.radius = radius;
+        normalUnif = gl.getUniformLocation(prog, "normalMat");
 
         //define colors
         let bodyColor = vec3.fromValues(250/255,240/255,230/255);
@@ -37,20 +38,33 @@ class bbBottom {
         mat4.rotateY(this.ringsTransform3, this.ringsTransform3, Math.PI/4);
 
         this.tmp = mat4.create();
+        this.normalMat = mat3.create();
     }
 
-    draw (vertexAttr, colorAttr, modelUniform, coordFrame) {
+    draw (vertexAttr, colorAttr, modelUniform, coordFrame, viewMat) {
 
         // mat4.mul (this.tmp, coordFrame, this.bodyTransform);
         this.body.draw(vertexAttr, colorAttr, modelUniform, coordFrame);
 
         mat4.mul (this.tmp, coordFrame, this.ringsTransform1);
+        tmpMat = mat4.create();
+        mat4.mul (tmpMat, viewMat, this.tmp);
+        mat3.normalFromMat4 (this.normalMat, tmpMat);
+        gl.uniformMatrix3fv (normalUnif, false, this.normalMat);
         this.rings1.draw(vertexAttr, colorAttr, modelUniform, this.tmp);
 
         mat4.mul (this.tmp, coordFrame, this.ringsTransform2);
+        tmpMat = mat4.create();
+        mat4.mul (tmpMat, viewMat, this.tmp);
+        mat3.normalFromMat4 (this.normalMat, tmpMat);
+        gl.uniformMatrix3fv (normalUnif, false, this.normalMat);
         this.rings2.draw(vertexAttr, colorAttr, modelUniform, this.tmp);
 
         mat4.mul (this.tmp, coordFrame, this.ringsTransform3);
+        tmpMat = mat4.create();
+        mat4.mul (tmpMat, viewMat, this.tmp);
+        mat3.normalFromMat4 (this.normalMat, tmpMat);
+        gl.uniformMatrix3fv (normalUnif, false, this.normalMat);
         this.rings3.draw(vertexAttr, colorAttr, modelUniform, this.tmp);
     }
 

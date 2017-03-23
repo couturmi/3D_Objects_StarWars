@@ -82,7 +82,7 @@ class BB8 {
         mat4.mul (tmpMat, viewMat, this.bodyCoorFrame);
         mat3.normalFromMat4 (this.normalMat, tmpMat);
         gl.uniformMatrix3fv (normalUnif, false, this.normalMat);
-        this.body.draw(vertexAttr, colorAttr, modelUniform, this.bodyCoorFrame);
+        this.body.draw(vertexAttr, colorAttr, modelUniform, this.bodyCoorFrame, viewMat);
 
         //spin head (not constant)
         if(this.spinCount >= this.spinCountMax){
